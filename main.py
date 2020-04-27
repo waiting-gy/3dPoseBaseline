@@ -295,7 +295,7 @@ def test(test_loader, model, criterion, stat_3d, procrustes=False):
         outputs_unnorm = data_process.unNormalizeData(outputs.data.cpu().numpy(), stat_3d['mean'], stat_3d['std'], stat_3d['dim_use'])
 
 #        print(outputs_unnorm.shape[0])
-#     
+#
 #        print('outputs_unnorm:',((outputs_unnorm)))#16*2
 
         _max = 0
@@ -319,7 +319,7 @@ def test(test_loader, model, criterion, stat_3d, procrustes=False):
             for j in range(32):
                tmp = outputs_unnorm[k][j * 3 + 2] # tmp = z
                outputs_unnorm[k][j * 3 + 2] = outputs_unnorm[k][j * 3 + 1]# z = y
-               outputs_unnorm[k][j * 3 + 1] = tmp # y = z 
+               outputs_unnorm[k][j * 3 + 1] = tmp # y = z
                if outputs_unnorm[k][j * 3 + 2] > _max:
                    _max = outputs_unnorm[k][j * 3 + 2]# z max
                if outputs_unnorm[k][j * 3 + 2] < _min:
@@ -335,7 +335,7 @@ def test(test_loader, model, criterion, stat_3d, procrustes=False):
             for j in range(32):
                #tmp1 = inputs_unnorm[k][j * 2 + 2] # tmp = z
                #inputs_unnorm[k][j * 2 + 2] = inputs_unnorm[k][j * 3 + 1]# z = y
-               #inputs_unnorm[k][j * 2 + 1] = tmp1 # y = z 
+               #inputs_unnorm[k][j * 2 + 1] = tmp1 # y = z
                if inputs_unnorm[k][j * 2 + 1] > _max:
                    _max = inputs_unnorm[k][j * 2 + 1]# z max
                if inputs_unnorm[k][j * 2 + 1] < _min:
@@ -346,18 +346,18 @@ def test(test_loader, model, criterion, stat_3d, procrustes=False):
                 inputs_unnorm[k][j * 2 + 1] = _max - inputs_unnorm[k][j * 2 + 1] + _min# z = max-z
                 #inputs_unnorm[k][j * 3] += (spine_x - 630)# x
                 #inputs_unnorm[k][j * 3 + 2] += (500 - spine_y)# z
-        
+
 #        for k in range(len(outputs_unnorm)):
 #           for j in range(32):
 #              tmp0 = targets_unnorm[k][j * 3 + 2]# tmp = z
 #              targets_unnorm[k][j * 3 + 2] = targets_unnorm[k][j * 3 + 1]# z = y
-#              targets_unnorm[k][j * 3 + 1] = tmp0 # y = z 
+#              targets_unnorm[k][j * 3 + 1] = tmp0 # y = z
 #
 #              tmp = outputs_unnorm[k][j * 3 + 2]# tmp = z
 #              outputs_unnorm[k][j * 3 + 2] = outputs_unnorm[k][j * 3 + 1]# z = y
-#              outputs_unnorm[k][j * 3 + 1] = tmp # y = z 
-#           
-#        for k in range(len(outputs_unnorm)):  
+#              outputs_unnorm[k][j * 3 + 1] = tmp # y = z
+#
+#        for k in range(len(outputs_unnorm)):
 #           hip_z0 = targets_unnorm[k][3]
 #           for j in range(32):
 #              targets_unnorm[k][j * 3 + 2] = targets_unnorm[k][j * 3 + 2] - 2*(targets_unnorm[k][j * 3 + 2] - hip_z0)
@@ -365,25 +365,11 @@ def test(test_loader, model, criterion, stat_3d, procrustes=False):
 #           hip_z = outputs_unnorm[k][3]
 #           for j in range(32):
 #              outputs_unnorm[k][j * 3 + 2] = outputs_unnorm[k][j * 3 + 2] - 2*(outputs_unnorm[k][j * 3 + 2] - hip_z)
-                        
+
         for pp in range(len(outputs_unnorm)):
 
-
-#           ax0 = fig.add_subplot(131, projection='3d')
-#           ax0.view_init(0, 300)      
-#           viz.show3Dpose( targets_unnorm[pp], ax0, add_labels=True, title = 'GroundTruth')
-           ax0 = fig.add_subplot(132)
-           #ax0.view_init(0, 300)      
-           viz.show2Dpose( inputs_unnorm[pp]*2.4, ax0, add_labels=True, title = '2DPose Input')
-
-           Reconstruction = 1/((time.time() - start))
-           start = time.time()
-           ax1 = fig.add_subplot(133, projection='3d') 
-#           print(len(outputs_unnorm[pp])) #96
-           ax1.view_init(0, 300) #默认值30，120    
-           viz.show3Dpose( outputs_unnorm[pp], ax1, add_labels=True, title = 'Reconstruction:  {}FPS'.format(int(Reconstruction)))
 #
-           ax2 = fig.add_subplot(131)     
+           ax2 = fig.add_subplot(131)
            ax2.get_xaxis().set_visible(False)
            ax2.get_yaxis().set_visible(False)
            ax2.set_axis_off()
@@ -394,8 +380,22 @@ def test(test_loader, model, criterion, stat_3d, procrustes=False):
            img2d = imgplt.imread(os.path.join('/home/ubuntu/gaoyu/alphapose/Video3D3_cmu/vis/', '{0}.jpg'.format((filelist[i].split('.')[0]).zfill(12))))
            ax2.imshow(img2d, aspect='equal')
 #
+#           ax0 = fig.add_subplot(131, projection='3d')
+#           ax0.view_init(0, 300)
+#           viz.show3Dpose( targets_unnorm[pp], ax0, add_labels=True, title = 'GroundTruth')
+           ax0 = fig.add_subplot(132)
+           #ax0.view_init(0, 300)
+           viz.show2Dpose( inputs_unnorm[pp]*2.4, ax0, add_labels=True, title = '2DPose Input')
+
+           Reconstruction = 1/((time.time() - start))
+           start = time.time()
+           ax1 = fig.add_subplot(133, projection='3d')
+#           print(len(outputs_unnorm[pp])) #96
+           ax1.view_init(0, 300) #默认值30，120
+           viz.show3Dpose( outputs_unnorm[pp], ax1, add_labels=True, title = 'Reconstruction:  {}FPS'.format(int(Reconstruction)))
+
            plt.pause(0.0000001)
-           plt.clf() 
+           plt.clf()
 
 #        print('targets_unnorm:',len(outputs_unnorm[0]))#96=32*3
 #        print('outputs_unnorm:',len(outputs_unnorm[0]))#96=32*3
