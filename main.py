@@ -369,7 +369,7 @@ def test(test_loader, model, criterion, stat_3d, procrustes=False):
         for pp in range(len(outputs_unnorm)):
 
 #
-           ax2 = fig.add_subplot(133)
+           ax2 = fig.add_subplot(131)
            ax2.get_xaxis().set_visible(False)
            ax2.get_yaxis().set_visible(False)
            ax2.set_axis_off()
@@ -389,7 +389,7 @@ def test(test_loader, model, criterion, stat_3d, procrustes=False):
 
            Reconstruction = 1/((time.time() - start))
            start = time.time()
-           ax1 = fig.add_subplot(131, projection='3d')
+           ax1 = fig.add_subplot(133, projection='3d')
 #           print(len(outputs_unnorm[pp])) #96
            ax1.view_init(0, 300) #默认值30，120
            viz.show3Dpose( outputs_unnorm[pp], ax1, add_labels=True, title = 'Reconstruction:  {}FPS'.format(int(Reconstruction)))
