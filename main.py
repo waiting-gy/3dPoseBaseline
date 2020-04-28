@@ -289,8 +289,14 @@ def test(test_loader, model, criterion, stat_3d, procrustes=False):
 #        print('targets:',(len(targets[0])))#16*3
 
         # calculate loss
-        outputs_coord = outputs
-        loss = criterion(outputs_coord, targets)
+
+        ###########
+        loss1 = criterion(outputs[0], targets)
+        loss2 = criterion(outputs[1], targets)
+        loss = loss1 + loss2
+        ########
+        #outputs_coord = outputs
+        #loss = criterion(outputs_coord, targets)
 
         losses.update(loss.item(), inputs.size(0))
 
