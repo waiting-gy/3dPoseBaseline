@@ -303,7 +303,7 @@ def test(test_loader, model, criterion, stat_3d, procrustes=False):
         tars = targets
 
         # calculate erruracy
-        inputs_unnorm = data_process.unNormalizeData(inps.data.cpu().numpy(), stat_2d['mean'], stat_2d['std'], stat_2d['dim_use'])
+        #inputs_unnorm = data_process.unNormalizeData(inps.data.cpu().numpy(), stat_2d['mean'], stat_2d['std'], stat_2d['dim_use'])
         targets_unnorm = data_process.unNormalizeData(tars.data.cpu().numpy(), stat_3d['mean'], stat_3d['std'], stat_3d['dim_use'])
         outputs_unnorm = data_process.unNormalizeData(outputs[1].data.cpu().numpy(), stat_3d['mean'], stat_3d['std'], stat_3d['dim_use'])
 
@@ -311,54 +311,54 @@ def test(test_loader, model, criterion, stat_3d, procrustes=False):
 #
 #        print('outputs_unnorm:',((outputs_unnorm)))#16*2
 
-        _max = 0
-        _min = 10000
+        #_max = 0
+        #_min = 10000
 
-        org_path = r"./data/jsonAlpha_one2/"
-        filelist = strsort(os.listdir(org_path))
-        #print(len(filelist))
+        #org_path = r"./data/jsonAlpha_one2/"
+        #filelist = strsort(os.listdir(org_path))
+        ##print(len(filelist))
 
 
-        with open(os.path.join(org_path,filelist[i]),encoding='utf8')as fp:
-            json_data = json.load(fp)
-        spine_x = json_data['people'][0]['pose_keypoints_2d'][24]
-        spine_y = json_data['people'][0]['pose_keypoints_2d'][25]
+        #with open(os.path.join(org_path,filelist[i]),encoding='utf8')as fp:
+        #    json_data = json.load(fp)
+        #spine_x = json_data['people'][0]['pose_keypoints_2d'][24]
+        #spine_y = json_data['people'][0]['pose_keypoints_2d'][25]
         #spine_x = spine_x
         #spine_y = spine_y
 
-        print(spine_x)
+        #print(spine_x)
 
-        for k in range(outputs_unnorm.shape[0]):
-            for j in range(32):
-               tmp = outputs_unnorm[k][j * 3 + 2] # tmp = z
-               outputs_unnorm[k][j * 3 + 2] = outputs_unnorm[k][j * 3 + 1]# z = y
-               outputs_unnorm[k][j * 3 + 1] = tmp # y = z
-               if outputs_unnorm[k][j * 3 + 2] > _max:
-                   _max = outputs_unnorm[k][j * 3 + 2]# z max
-               if outputs_unnorm[k][j * 3 + 2] < _min:
-                   _min = outputs_unnorm[k][j * 3 + 2]# z min
-         #plot出的姿态是倒立的,通过该方法将其校正
-        for k in range(outputs_unnorm.shape[0]):
-            for j in range(32):
-                outputs_unnorm[k][j * 3 + 2] = _max - outputs_unnorm[k][j * 3 + 2] + _min# z = max-z
-                outputs_unnorm[k][j * 3] += (spine_x - 630)# x
-                outputs_unnorm[k][j * 3 + 2] += (500 - spine_y)# z
+        #for k in range(outputs_unnorm.shape[0]):
+        #    for j in range(32):
+        #       tmp = outputs_unnorm[k][j * 3 + 2] # tmp = z
+        #       outputs_unnorm[k][j * 3 + 2] = outputs_unnorm[k][j * 3 + 1]# z = y
+        #       outputs_unnorm[k][j * 3 + 1] = tmp # y = z
+        #       if outputs_unnorm[k][j * 3 + 2] > _max:
+        #           _max = outputs_unnorm[k][j * 3 + 2]# z max
+        #       if outputs_unnorm[k][j * 3 + 2] < _min:
+        #           _min = outputs_unnorm[k][j * 3 + 2]# z min
+        # #plot出的姿态是倒立的,通过该方法将其校正
+        #for k in range(outputs_unnorm.shape[0]):
+        #    for j in range(32):
+        #        outputs_unnorm[k][j * 3 + 2] = _max - outputs_unnorm[k][j * 3 + 2] + _min# z = max-z
+        #        outputs_unnorm[k][j * 3] += (spine_x - 630)# x
+        #        outputs_unnorm[k][j * 3 + 2] += (500 - spine_y)# z
 
-        for k in range(inputs_unnorm.shape[0]):
-            for j in range(32):
-               #tmp1 = inputs_unnorm[k][j * 2 + 2] # tmp = z
-               #inputs_unnorm[k][j * 2 + 2] = inputs_unnorm[k][j * 3 + 1]# z = y
-               #inputs_unnorm[k][j * 2 + 1] = tmp1 # y = z
-               if inputs_unnorm[k][j * 2 + 1] > _max:
-                   _max = inputs_unnorm[k][j * 2 + 1]# z max
-               if inputs_unnorm[k][j * 2 + 1] < _min:
-                   _min = inputs_unnorm[k][j * 2 + 1]# z min
-         #plot出的姿态是倒立的,通过该方法将其校正
-        for k in range(inputs_unnorm.shape[0]):
-            for j in range(32):
-                inputs_unnorm[k][j * 2 + 1] = _max - inputs_unnorm[k][j * 2 + 1] + _min# z = max-z
-                #inputs_unnorm[k][j * 3] += (spine_x - 630)# x
-                #inputs_unnorm[k][j * 3 + 2] += (500 - spine_y)# z
+        #for k in range(inputs_unnorm.shape[0]):
+        #    for j in range(32):
+        #       #tmp1 = inputs_unnorm[k][j * 2 + 2] # tmp = z
+        #       #inputs_unnorm[k][j * 2 + 2] = inputs_unnorm[k][j * 3 + 1]# z = y
+        #       #inputs_unnorm[k][j * 2 + 1] = tmp1 # y = z
+        #       if inputs_unnorm[k][j * 2 + 1] > _max:
+        #           _max = inputs_unnorm[k][j * 2 + 1]# z max
+        #       if inputs_unnorm[k][j * 2 + 1] < _min:
+        #           _min = inputs_unnorm[k][j * 2 + 1]# z min
+        # #plot出的姿态是倒立的,通过该方法将其校正
+        #for k in range(inputs_unnorm.shape[0]):
+        #    for j in range(32):
+        #        inputs_unnorm[k][j * 2 + 1] = _max - inputs_unnorm[k][j * 2 + 1] + _min# z = max-z
+        #        #inputs_unnorm[k][j * 3] += (spine_x - 630)# x
+        #        #inputs_unnorm[k][j * 3 + 2] += (500 - spine_y)# z
 
 #        for k in range(len(outputs_unnorm)):
 #           for j in range(32):
