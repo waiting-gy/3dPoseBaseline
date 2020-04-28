@@ -41,6 +41,36 @@ class Linear(nn.Module):
         return out
 
 
+class Linear2(nn.Module):
+    def __init__(self, linear_size, p_dropout=0.5):
+        super(Linear, self).__init__()
+        self.l_size = linear_size
+
+        self.relu = nn.ReLU(inplace=True)
+        self.dropout = nn.Dropout(p_dropout)
+
+        self.w1 = nn.Linear(self.l_size, self.l_size)
+        self.batch_norm1 = nn.BatchNorm1d(self.l_size)
+
+        self.w2 = nn.Linear(self.l_size, self.l_size)
+        self.batch_norm2 = nn.BatchNorm1d(self.l_size)
+
+    def forward(self, x):
+        y = self.w1(x)
+        y = self.batch_norm1(y)
+        y = self.relu(y)
+        y = self.dropout(y)
+
+        y = self.w2(y)
+        y = self.batch_norm2(y)
+        y = self.relu(y)
+        y = self.dropout(y)
+
+        out = y
+
+        return out
+
+
 class LinearModel(nn.Module):
     def __init__(self,
                  linear_size=1024,

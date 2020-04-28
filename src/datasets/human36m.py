@@ -114,7 +114,7 @@ class Human36M(Dataset):
             outputs = torch.from_numpy(self.train_out[index]).float()
 
         else:
-            _data = self.test_inp[index]
+        #    _data = self.test_inp[index]
             inputs = torch.from_numpy(self.test_inp[index]).float()
             outputs = torch.from_numpy(self.test_out[index]).float()
 
@@ -129,19 +129,19 @@ class Human36M(Dataset):
 #            print((np.array(list_input)).flatten().reshape(-1,64))
 #            _data = list_input[index]
 #            _data = np.array(json_data0['people'][0]['pose_keypoints_2d'])
-            stat_2d = torch.load(os.path.join(opt.data_dir, 'stat_2d.pth.tar'))
+        #   stat_2d = torch.load(os.path.join(opt.data_dir, 'stat_2d.pth.tar'))
 
-            _data = _data[stat_2d['dim_use']]
+        #    _data = _data[stat_2d['dim_use']]
             #print(stat_2d['dim_use'])
-            mu = stat_2d['mean'][stat_2d['dim_use']]
-            stddev = stat_2d['std'][stat_2d['dim_use']]
+        #    mu = stat_2d['mean'][stat_2d['dim_use']]
+        #    stddev = stat_2d['std'][stat_2d['dim_use']]
 #            print(_data)
          #   inputs = torch.from_numpy(np.divide((_data - mu), stddev)).float()
 #            data_mean = np.mean(_data, axis=0)
 #            data_std  = np.std(_data, axis=0)
 #            inputs = torch.from_numpy(np.divide((_data - data_mean), data_std)).float()
 
-            outputs = torch.from_numpy(np.array([0 for i in range(48)])).float()
+        #    outputs = torch.from_numpy(np.array([0 for i in range(48)])).float()
             #print(inputs)
         return inputs, outputs
 
