@@ -91,20 +91,20 @@ class Human36M(Dataset):
                 num_f, _ = self.test_2d[k2d].shape
                 assert self.test_2d[k2d].shape[0] == self.test_3d[k3d].shape[0], '(test) 3d & 2d shape not matched'
                 for i in range(num_f):
-#                    self.test_inp.append(self.test_2d[k2d][i])
+                    self.test_inp.append(self.test_2d[k2d][i])
                     self.test_out.append(self.test_3d[k3d][i])
 
 
-            org_path = r"./data/jsonAlpha_one2/"
-            filelist = strsort(os.listdir(org_path))
-            print(len(filelist))
+           # org_path = r"./data/jsonAlpha_one2/"
+           # filelist = strsort(os.listdir(org_path))
+           # print(len(filelist))
 
-            for i in range(len(filelist)):
-                frame = filelist[i].split('.')[0]
-                with open(os.path.join(org_path,filelist[i]),encoding='utf8')as fp:
-                    json_data = json.load(fp)
-                self.test_inp.append(np.array(json_data['people'][0]['pose_keypoints_2d']))
-            #self.spine_x = self.test_inp[]
+           # for i in range(len(filelist)):
+           #     frame = filelist[i].split('.')[0]
+           #     with open(os.path.join(org_path,filelist[i]),encoding='utf8')as fp:
+           #         json_data = json.load(fp)
+           #     self.test_inp.append(np.array(json_data['people'][0]['pose_keypoints_2d']))
+           # #self.spine_x = self.test_inp[]
 
             
 
@@ -115,7 +115,7 @@ class Human36M(Dataset):
 
         else:
             _data = self.test_inp[index]
-#            inputs = torch.from_numpy(self.test_inp[index]).float()
+            inputs = torch.from_numpy(self.test_inp[index]).float()
             outputs = torch.from_numpy(self.test_out[index]).float()
 
 
@@ -136,7 +136,7 @@ class Human36M(Dataset):
             mu = stat_2d['mean'][stat_2d['dim_use']]
             stddev = stat_2d['std'][stat_2d['dim_use']]
 #            print(_data)
-            inputs = torch.from_numpy(np.divide((_data - mu), stddev)).float()
+         #   inputs = torch.from_numpy(np.divide((_data - mu), stddev)).float()
 #            data_mean = np.mean(_data, axis=0)
 #            data_std  = np.std(_data, axis=0)
 #            inputs = torch.from_numpy(np.divide((_data - data_mean), data_std)).float()
