@@ -379,36 +379,37 @@ def test(test_loader, model, criterion, stat_3d, procrustes=False):
 #           for j in range(32):
 #              outputs_unnorm[k][j * 3 + 2] = outputs_unnorm[k][j * 3 + 2] - 2*(outputs_unnorm[k][j * 3 + 2] - hip_z)
 
-        for pp in range(len(outputs_unnorm)):
+        #for pp in range(len(outputs_unnorm)):
 
 #
-           ax2 = fig.add_subplot(131)
-           ax2.get_xaxis().set_visible(False)
-           ax2.get_yaxis().set_visible(False)
-           ax2.set_axis_off()
-           ax2.set_title('Input')
-           org_path = r"/home/ubuntu/gaoyu/alphapose/Video3D3_cmu/sep-json/"
-           filelist = strsort(os.listdir(org_path))
-           print(filelist[i])
-           img2d = imgplt.imread(os.path.join('/home/ubuntu/gaoyu/alphapose/Video3D3_cmu/vis/', '{0}.jpg'.format((filelist[i].split('.')[0]).zfill(12))))
-           ax2.imshow(img2d, aspect='equal')
+           #ax2 = fig.add_subplot(131)
+           #ax2.get_xaxis().set_visible(False)
+           #ax2.get_yaxis().set_visible(False)
+           #ax2.set_axis_off()
+           #ax2.set_title('Input')
+           #org_path = r"/home/ubuntu/gaoyu/alphapose/Video3D3_cmu/sep-json/"
+           #filelist = strsort(os.listdir(org_path))
+           #print(filelist[i])
+           #img2d = imgplt.imread(os.path.join('/home/ubuntu/gaoyu/alphapose/Video3D3_cmu/vis/', '{0}.jpg'.format((filelist[i].split('.')[0]).zfill(12))))
+           #ax2.imshow(img2d, aspect='equal')
 #
 #           ax0 = fig.add_subplot(131, projection='3d')
 #           ax0.view_init(0, 300)
 #           viz.show3Dpose( targets_unnorm[pp], ax0, add_labels=True, title = 'GroundTruth')
-           ax0 = fig.add_subplot(132)
+           #ax0 = fig.add_subplot(132)
            #ax0.view_init(0, 300)
-           viz.show2Dpose( inputs_unnorm[pp]*2.4, ax0, add_labels=True, title = '2DPose Input')
+           #viz.show2Dpose( inputs_unnorm[pp]*2.4, ax0, add_labels=True, title = '2DPose Input')
 
-           Reconstruction = 1/((time.time() - start))
-           start = time.time()
-           ax1 = fig.add_subplot(133, projection='3d')
-#           print(len(outputs_unnorm[pp])) #96
-           ax1.view_init(0, 300) #默认值30，120
-           viz.show3Dpose( outputs_unnorm[pp], ax1, add_labels=True, title = 'Reconstruction:  {}FPS'.format(int(Reconstruction)))
+           #Reconstruction = 1/((time.time() - start))
+           #start = time.time()
+           #ax1 = fig.add_subplot(133, projection='3d')
+#          # print(len(outputs_unnorm[pp])) #96
+           #ax1.view_init(0, 300) #默认值30，120
+           #viz.show3Dpose( outputs_unnorm[pp], ax1, add_labels=True, title = 'Reconstruction:  {}FPS'.format(int(Reconstruction)))
 
-           plt.pause(0.0000001)
-           plt.clf()
+           #plt.pause(0.0000001)
+           #plt.clf()
+
 
 #        print('targets_unnorm:',len(outputs_unnorm[0]))#96=32*3
 #        print('outputs_unnorm:',len(outputs_unnorm[0]))#96=32*3
