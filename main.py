@@ -220,7 +220,14 @@ def train(train_loader, model, criterion, optimizer,
 
         # calculate loss
         optimizer.zero_grad()
-        loss = criterion(outputs, targets)
+
+        ###########
+        loss1 = criterion(outputs[0], targets)
+        loss2 = criterion(outputs[1], targets)
+        loss = loss1 + loss2
+        ########
+
+        #loss = criterion(outputs, targets)
         losses.update(loss.item(), inputs.size(0))
         loss.backward()
         if max_norm:

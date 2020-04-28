@@ -72,6 +72,30 @@ class LinearModel(nn.Module):
         self.relu = nn.ReLU(inplace=True)
         self.dropout = nn.Dropout(self.p_dropout)
 
+      ######################
+        # 3d joints
+        self.input_size_2 =  16 * 3
+        # 3d joints
+        self.output_size_2 = 16 * 3
+
+        # process input to linear size
+        self.w3 = nn.Linear(self.input_size_2, self.linear_size)
+        self.batch_norm2 = nn.BatchNorm1d(self.linear_size)
+
+        self.linear_stages_2 = []
+        for l in range(num_stage):
+            self.linear_stages_2.append(Linear(self.linear_size, self.p_dropout))
+        self.linear_stages_2 = nn.ModuleList(self.linear_stages_2)
+
+        # post processing
+        self.w4 = nn.Linear(self.linear_size, self.output_size_2)
+
+        self.relu2 = nn.ReLU(inplace=True)
+        self.dropout2 = nn.Dropout(self.p_dropout)
+     ##########################
+
+
+
     def forward(self, x):
         # pre-processing
         y = self.w1(x)
@@ -85,4 +109,21 @@ class LinearModel(nn.Module):
 
         y = self.w2(y)
 
-        return y
+        ##########################
+
+        result = [y]
+
+        y = self.w3(y)
+        y = self.batch_norm2(y)
+        y = self.relu2(y)
+        y = self.dropout2(y)
+
+        # linear layers
+        for i in range(self.num_stage):
+            y = self.linear_stages_2[i](y)
+
+        y = self.w4(y)
+
+        result.append(y)
+
+        return result
