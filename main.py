@@ -255,7 +255,7 @@ def train(train_loader, model, criterion, optimizer,
                         batchtime=batch_time * 10.0,
                         loss=losses.avg)
                     )
-    test_loader.close()
+    train_loader.close()
 #
 
 #    bar.finish()
