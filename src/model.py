@@ -129,6 +129,7 @@ class LinearModel(nn.Module):
     def forward(self, x):
         # pre-processing
         y = self.w1(x)
+        print(y.weight,y.bias)
         y = self.batch_norm1(y)
         y = self.relu(y)
         y = self.dropout(y)
@@ -142,6 +143,7 @@ class LinearModel(nn.Module):
             y = self.linear_stages[i](y)
 
         y = self.w2(y)
+        print(y.weight, y.bias)
 
         ##########################
 
