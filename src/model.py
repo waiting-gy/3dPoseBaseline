@@ -114,7 +114,7 @@ class LinearModel(nn.Module):
 
         self.linear_stages_2 = []
         for l in range(num_stage):
-            self.linear_stages_2.append(Linear(self.linear_size, self.p_dropout))
+            self.linear_stages_2.append(Linear2(self.linear_size, self.p_dropout))
         self.linear_stages_2 = nn.ModuleList(self.linear_stages_2)
 
         # post processing
@@ -129,7 +129,6 @@ class LinearModel(nn.Module):
     def forward(self, x):
         # pre-processing
         y = self.w1(x)
-        print(y.weight,y.bias)
         y = self.batch_norm1(y)
         y = self.relu(y)
         y = self.dropout(y)
@@ -143,7 +142,6 @@ class LinearModel(nn.Module):
             y = self.linear_stages[i](y)
 
         y = self.w2(y)
-        print(y.weight, y.bias)
 
         ##########################
 
@@ -158,7 +156,7 @@ class LinearModel(nn.Module):
         for i in range(self.num_stage):
             y = self.linear_stages_2[i](y)
 
-        #y = y + y3d
+        y = y + y3d
 
         y = self.w4(y)
 
