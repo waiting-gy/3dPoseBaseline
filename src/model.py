@@ -114,7 +114,7 @@ class LinearModel(nn.Module):
 
         self.linear_stages_2 = []
         for l in range(num_stage):
-            self.linear_stages_2.append(Linear2(self.linear_size, self.p_dropout))
+            self.linear_stages_2.append(Linear(self.linear_size, self.p_dropout))
         self.linear_stages_2 = nn.ModuleList(self.linear_stages_2)
 
         # post processing

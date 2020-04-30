@@ -222,10 +222,10 @@ def train(train_loader, model, criterion, optimizer,
         optimizer.zero_grad()
 
         ###########
-        alpha = 0.8
+        alpha = 0.0
         loss1 = criterion(outputs[0], targets)
         loss2 = criterion(outputs[1], targets)
-        loss = alpha*loss1 + (1-alpha)*loss2
+        loss = alpha*loss1 + (1.0-alpha)*loss2
         ########
 
         #loss = criterion(outputs, targets)
@@ -292,10 +292,10 @@ def test(test_loader, model, criterion, stat_3d, procrustes=False):
         # calculate loss
 
         ###########
-        alpha = 0.8
+        alpha = 0.0
         loss1 = criterion(outputs[0], targets)
         loss2 = criterion(outputs[1], targets)
-        loss = alpha * loss1 + (1 - alpha) * loss2
+        loss = alpha * loss1 + (1.0 - alpha) * loss2
         ########
         #outputs_coord = outputs
         #loss = criterion(outputs_coord, targets)
