@@ -307,7 +307,7 @@ def test(test_loader, model, criterion, stat_3d, procrustes=False):
         # calculate erruracy
         #inputs_unnorm = data_process.unNormalizeData(inps.data.cpu().numpy(), stat_2d['mean'], stat_2d['std'], stat_2d['dim_use'])
         targets_unnorm = data_process.unNormalizeData(tars.data.cpu().numpy(), stat_3d['mean'], stat_3d['std'], stat_3d['dim_use'])
-        outputs_unnorm = data_process.unNormalizeData(outputs[1].data.cpu().numpy(), stat_3d['mean'], stat_3d['std'], stat_3d['dim_use'])
+        outputs_unnorm = data_process.unNormalizeData(outputs.data.cpu().numpy(), stat_3d['mean'], stat_3d['std'], stat_3d['dim_use'])
 
 #        print(outputs_unnorm.shape[0])
 #
