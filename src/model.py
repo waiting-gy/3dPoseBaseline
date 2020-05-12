@@ -134,7 +134,7 @@ class LinearModel(nn.Module):
         y = self.dropout(y)
 
         ###########################
-        y3d = y
+        # y3d = y
         ############################
 
         # linear layers
@@ -145,22 +145,23 @@ class LinearModel(nn.Module):
 
         ##########################
 
-        result = [y]
+        # result = [y]
+        #
+        # y = self.w3(y)
+        # y = self.batch_norm2(y)
+        # y = self.relu2(y)
+        # y = self.dropout2(y)
+        #
+        # # linear layers
+        # for i in range(self.num_stage):
+        #     y = self.linear_stages_2[i](y)
+        #
+        # #y = y + y3d
+        #
+        # y = self.w4(y)
+        #
+        #
+        # result.append(y)
 
-        y = self.w3(y)
-        y = self.batch_norm2(y)
-        y = self.relu2(y)
-        y = self.dropout2(y)
-
-        # linear layers
-        for i in range(self.num_stage):
-            y = self.linear_stages_2[i](y)
-
-        y = y + y3d
-
-        y = self.w4(y)
-
-
-        result.append(y)
-
-        return result
+        # return result
+        return y

@@ -221,14 +221,14 @@ def train(train_loader, model, criterion, optimizer,
         # calculate loss
         optimizer.zero_grad()
 
-        ###########
-        alpha = 0.0
-        loss1 = criterion(outputs[0], targets)
-        loss2 = criterion(outputs[1], targets)
-        loss = alpha*loss1 + (1.0-alpha)*loss2
-        ########
+        # ###########
+        # alpha = 0.0
+        # loss1 = criterion(outputs[0], targets)
+        # loss2 = criterion(outputs[1], targets)
+        # loss = alpha*loss1 + (1.0-alpha)*loss2
+        # ########
 
-        #loss = criterion(outputs, targets)
+        loss = criterion(outputs, targets)
         losses.update(loss.item(), inputs.size(0))
         loss.backward()
         if max_norm:
@@ -291,14 +291,14 @@ def test(test_loader, model, criterion, stat_3d, procrustes=False):
 
         # calculate loss
 
-        ###########
-        alpha = 0.0
-        loss1 = criterion(outputs[0], targets)
-        loss2 = criterion(outputs[1], targets)
-        loss = alpha * loss1 + (1.0 - alpha) * loss2
-        ########
-        #outputs_coord = outputs
-        #loss = criterion(outputs_coord, targets)
+        # ###########
+        # alpha = 0.0
+        # loss1 = criterion(outputs[0], targets)
+        # loss2 = criterion(outputs[1], targets)
+        # loss = alpha * loss1 + (1.0 - alpha) * loss2
+        # ########
+        outputs_coord = outputs
+        loss = criterion(outputs_coord, targets)
 
         losses.update(loss.item(), inputs.size(0))
 
