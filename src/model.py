@@ -139,7 +139,7 @@ class LinearModel(nn.Module):
         print(d)
 
         ######################################################################
-        print(x)
+        print(x.shape)
         y = self.w1(x)
         print(y.shape)
         y = self.batch_norm1(y)
