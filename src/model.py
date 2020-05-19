@@ -153,13 +153,13 @@ class LinearModel(nn.Module):
         # if x.shape == self.input_size:
         #     x = x.unsqueeze(0)
         ######################################################################
-        print(x.shape)
-        # y = self.w1(x)
-        print(y.shape)
-        # y = self.batch_norm1(y)
-        print(y.shape)
-        # y = self.relu(y)
-        print(y.shape)
+        # print(x.shape)
+        y = self.w1(x)
+        # print(y.shape)
+        y = self.batch_norm1(y)
+        # print(y.shape)
+        y = self.relu(y)
+        # print(y.shape)
         y = self.dropout(y)
         # print(y.shape)
 
