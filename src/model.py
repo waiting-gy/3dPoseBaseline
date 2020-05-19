@@ -135,7 +135,9 @@ class LinearModel(nn.Module):
         # pre-processing
 
         ######################################################################
-        # d = self.dilat(x.unsqueeze(1))
+        d = self.dilat(x.unsqueeze(1))
+        print(d)
+        print(type(d))
         print(x.unsqueeze(1).shape)
         print(x.unsqueeze(1))
 
