@@ -133,14 +133,15 @@ class LinearModel(nn.Module):
 
     def forward(self, x):
         # pre-processing
-        print(x)
-        y = self.w1(x)
-        print(y.shape)
+
         ######################################################################
-        d = self.dilat(y)
+        d = self.dilat(x)
         print(d)
 
         ######################################################################
+        print(x)
+        y = self.w1(x)
+        print(y.shape)
         y = self.batch_norm1(y)
         print(y.shape)
         y = self.relu(y)
