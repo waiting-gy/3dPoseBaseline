@@ -128,7 +128,7 @@ class LinearModel(nn.Module):
 
     def forward(self, x):
         # pre-processing
-        print(x.shape)
+        print(x)
         y = self.w1(x)
         print(y.shape)
         y = self.batch_norm1(y)
