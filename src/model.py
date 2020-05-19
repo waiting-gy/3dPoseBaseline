@@ -128,10 +128,15 @@ class LinearModel(nn.Module):
 
     def forward(self, x):
         # pre-processing
+        print(x.shape)
         y = self.w1(x)
+        print(y.shape)
         y = self.batch_norm1(y)
+        print(y.shape)
         y = self.relu(y)
+        print(y.shape)
         y = self.dropout(y)
+        print(y.shape)
 
         ###########################
         # y3d = y
