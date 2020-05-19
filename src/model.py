@@ -138,6 +138,7 @@ class LinearModel(nn.Module):
         d = self.dilat(x.unsqueeze(1))
         print(d)
         print(type(d))
+        print(d.shape)
         print(x.unsqueeze(1).shape)
         print(x.unsqueeze(1))
 
