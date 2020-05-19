@@ -137,7 +137,7 @@ class LinearModel(nn.Module):
         ######################################################################
         d = self.dilat(x.unsqueeze(1))
         x = d.squeeze(1)
-        print(x)
+        # print(x)
         # print(x)
         # print(self.dilat.weight)
         #
@@ -154,14 +154,14 @@ class LinearModel(nn.Module):
         #     x = x.unsqueeze(0)
         ######################################################################
         print(x.shape)
-        y = self.w1(x)
+        # y = self.w1(x)
         print(y.shape)
-        y = self.batch_norm1(y)
+        # y = self.batch_norm1(y)
         print(y.shape)
-        y = self.relu(y)
+        # y = self.relu(y)
         print(y.shape)
         y = self.dropout(y)
-        print(y.shape)
+        # print(y.shape)
 
         ###########################
         # y3d = y
