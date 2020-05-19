@@ -91,7 +91,7 @@ class LinearModel(nn.Module):
         self.w1 = nn.Linear(self.input_size, self.linear_size)
 
         ######################################################################
-        self.dilat = nn.Conv1d(in_channels=2, out_channels=2,kernel_size=2, dilation=2, bias=False, padding=1)
+        self.dilat = nn.Conv1d(in_channels=2, out_channels=2,kernel_size=1, dilation=2, bias=False, padding=1)
 
         ######################################################################
         self.batch_norm1 = nn.BatchNorm1d(self.linear_size)
