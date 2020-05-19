@@ -89,6 +89,11 @@ class LinearModel(nn.Module):
 
         # process input to linear size
         self.w1 = nn.Linear(self.input_size, self.linear_size)
+
+        ######################################################################
+        self.dilat = nn.Conv1d(in_channels=2, out_channels=2,kernel_size=2, dilation=2, bias=False, padding=1)
+
+        ######################################################################
         self.batch_norm1 = nn.BatchNorm1d(self.linear_size)
 
         self.linear_stages = []
@@ -131,6 +136,11 @@ class LinearModel(nn.Module):
         print(x)
         y = self.w1(x)
         print(y.shape)
+        ######################################################################
+        d = self.dilat(y)
+        print(d)
+
+        ######################################################################
         y = self.batch_norm1(y)
         print(y.shape)
         y = self.relu(y)
