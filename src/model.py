@@ -66,7 +66,7 @@ class Linear(nn.Module):
 
 class Linear_pw(nn.Module):
     def __init__(self, linear_size, p_dropout=0.5):
-        super(Linear, self).__init__()
+        super(Linear_pw, self).__init__()
         self.l_size = linear_size
 
         self.relu = nn.ReLU(inplace=True)
