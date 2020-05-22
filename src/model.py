@@ -5,6 +5,10 @@ from __future__ import print_function
 
 import torch.nn as nn
 
+###########################
+import torch
+###########################
+
 
 def weight_init(m):
     if isinstance(m, nn.Linear):
@@ -59,6 +63,98 @@ class Linear(nn.Module):
         out = x + y
 
         return out
+
+class Linear_pw(nn.Module):
+    def __init__(self, linear_size, p_dropout=0.5):
+        super(Linear, self).__init__()
+        self.l_size = linear_size
+
+        self.relu = nn.ReLU(inplace=True)
+        self.dropout = nn.Dropout(p_dropout)
+
+        self.p1w1 = nn.Linear(self.l_size, self.linear_size)
+        self.p2w1 = nn.Linear(self.l_size, self.linear_size)
+        self.p3w1 = nn.Linear(self.l_size, self.linear_size)
+        self.p4w1 = nn.Linear(self.l_size, self.linear_size)
+        self.p5w1 = nn.Linear(self.l_size, self.linear_size)
+
+        self.p1w1_batch_norm1 = nn.BatchNorm1d(self.linear_size)
+        self.p2w1_batch_norm1 = nn.BatchNorm1d(self.linear_size)
+        self.p3w1_batch_norm1 = nn.BatchNorm1d(self.linear_size)
+        self.p4w1_batch_norm1 = nn.BatchNorm1d(self.linear_size)
+        self.p5w1_batch_norm1 = nn.BatchNorm1d(self.linear_size)
+
+        self.p1w2 = nn.Linear(self.l_size, self.linear_size)
+        self.p2w2 = nn.Linear(self.l_size, self.linear_size)
+        self.p3w2 = nn.Linear(self.l_size, self.linear_size)
+        self.p4w2 = nn.Linear(self.l_size, self.linear_size)
+        self.p5w2 = nn.Linear(self.l_size, self.linear_size)
+
+        self.p1w2_batch_norm1 = nn.BatchNorm1d(self.linear_size)
+        self.p2w2_batch_norm1 = nn.BatchNorm1d(self.linear_size)
+        self.p3w2_batch_norm1 = nn.BatchNorm1d(self.linear_size)
+        self.p4w2_batch_norm1 = nn.BatchNorm1d(self.linear_size)
+        self.p5w2_batch_norm1 = nn.BatchNorm1d(self.linear_size)
+
+
+    def forward(self, x_p1, x_p2, x_p3, x_p4, x_p5):
+
+        y_p1 = self.p1w1(x_p1)
+        y_p2 = self.p1w1(x_p2)
+        y_p3 = self.p1w1(x_p3)
+        y_p4 = self.p1w1(x_p4)
+        y_p5 = self.p1w1(x_p5)
+
+        y_p1 = self.p1w1_batch_norm1(y_p1)
+        y_p2 = self.p2w1_batch_norm1(y_p2)
+        y_p3 = self.p3w1_batch_norm1(y_p3)
+        y_p4 = self.p4w1_batch_norm1(y_p4)
+        y_p5 = self.p5w1_batch_norm1(y_p5)
+
+        y_p1 = self.relu(y_p1)
+        y_p2 = self.relu(y_p2)
+        y_p3 = self.relu(y_p3)
+        y_p4 = self.relu(y_p4)
+        y_p5 = self.relu(y_p5)
+
+        y_p1 = self.dropout(y_p1)
+        y_p2 = self.dropout(y_p2)
+        y_p3 = self.dropout(y_p3)
+        y_p4 = self.dropout(y_p4)
+        y_p5 = self.dropout(y_p5)
+
+        y_p1 = self.p1w2(y_p1)
+        y_p2 = self.p1w2(y_p2)
+        y_p3 = self.p1w2(y_p3)
+        y_p4 = self.p1w2(y_p4)
+        y_p5 = self.p1w2(y_p5)
+
+        y_p1 = self.p1w2_batch_norm1(y_p1)
+        y_p2 = self.p2w2_batch_norm1(y_p2)
+        y_p3 = self.p3w2_batch_norm1(y_p3)
+        y_p4 = self.p4w2_batch_norm1(y_p4)
+        y_p5 = self.p5w2_batch_norm1(y_p5)
+
+        y_p1 = self.relu(y_p1)
+        y_p2 = self.relu(y_p2)
+        y_p3 = self.relu(y_p3)
+        y_p4 = self.relu(y_p4)
+        y_p5 = self.relu(y_p5)
+
+        y_p1 = self.dropout(y_p1)
+        y_p2 = self.dropout(y_p2)
+        y_p3 = self.dropout(y_p3)
+        y_p4 = self.dropout(y_p4)
+        y_p5 = self.dropout(y_p5)
+
+        out1 = x_p1 + y_p1
+        out2 = x_p2 + y_p2
+        out3 = x_p3 + y_p3
+        out4 = x_p4 + y_p4
+        out5 = x_p5 + y_p5
+
+
+        return out1, out2, out3, out4, out5
 
 
 class Linear2(nn.Module):
@@ -119,6 +215,68 @@ class LinearModel(nn.Module):
         self.dilat4 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
 
         ######################################################################
+
+
+
+        ######################################################################
+
+        self.p1w1 = nn.Linear(3 * 2, self.linear_size)
+        self.p2w1 = nn.Linear(3 * 2, self.linear_size)
+        self.p3w1 = nn.Linear(4 * 2, self.linear_size)
+        self.p4w1 = nn.Linear(3 * 2, self.linear_size)
+        self.p5w1 = nn.Linear(3 * 2, self.linear_size)
+
+        self.pw1_dilat1 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
+        self.pw2_dilat1 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
+        self.pw3_dilat1 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
+        self.pw4_dilat1 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
+        self.pw5_dilat1 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
+
+        self.p1w1_batch_norm1 = nn.BatchNorm1d(self.linear_size)
+        self.p2w1_batch_norm1 = nn.BatchNorm1d(self.linear_size)
+        self.p3w1_batch_norm1 = nn.BatchNorm1d(self.linear_size)
+        self.p4w1_batch_norm1 = nn.BatchNorm1d(self.linear_size)
+        self.p5w1_batch_norm1 = nn.BatchNorm1d(self.linear_size)
+
+        self.p1w1_relu = nn.ReLU(inplace=True)
+        self.p2w1_relu = nn.ReLU(inplace=True)
+        self.p3w1_relu = nn.ReLU(inplace=True)
+        self.p4w1_relu = nn.ReLU(inplace=True)
+        self.p5w1_relu = nn.ReLU(inplace=True)
+
+        self.p1w1_dropout = nn.Dropout(self.p_dropout)
+        self.p2w1_dropout = nn.Dropout(self.p_dropout)
+        self.p3w1_dropout = nn.Dropout(self.p_dropout)
+        self.p4w1_dropout = nn.Dropout(self.p_dropout)
+        self.p5w1_dropout = nn.Dropout(self.p_dropout)
+
+
+        self.pw_linear_stages = []
+        for l in range(num_stage):
+            self.pw_linear_stages.append(Linear_pw(self.linear_size, self.p_dropout))
+        self.pw_linear_stages = nn.ModuleList(self.pw_linear_stages)
+
+
+        self.p1w2 = nn.Linear(self.linear_size, self.linear_size)
+        self.p2w2 = nn.Linear(self.linear_size, self.linear_size)
+        self.p3w2 = nn.Linear(self.linear_size, self.linear_size)
+        self.p4w2 = nn.Linear(self.linear_size, self.linear_size)
+        self.p5w2 = nn.Linear(self.linear_size, self.linear_size)
+
+
+        self.pw3 = nn.Linear(self.linear_size*5, self.linear_size)
+        self.pw3_batch_norm = nn.BatchNorm1d(self.linear_size)
+        self.pw3_relu = nn.ReLU(inplace=True)
+        self.pw3_dropout = nn.Dropout(self.p_dropout)
+
+
+        self.pw4 = nn.Linear(self.linear_size * 5, self.output_size)
+
+
+
+        ######################################################################
+
+
         self.batch_norm1 = nn.BatchNorm1d(self.linear_size)
 
         self.linear_stages = []
@@ -157,78 +315,135 @@ class LinearModel(nn.Module):
 
 
     def forward(self, x):
-        # pre-processing
-
-        ######################################################################
-        # d = self.dilat1(x.unsqueeze(1))
-        # x = d.squeeze(1)
+        # # pre-processing
         #
-        # print(x)
-        # print(x)
-        # print(self.dilat.weight)
+        # ######################################################################
+        # # d = self.dilat1(x.unsqueeze(1))
+        # # x = d.squeeze(1)
+        # #
+        # # print(x)
+        # # print(x)
+        # # print(self.dilat.weight)
+        # #
+        # # print(d)
+        # # print(type(d))
+        # # print(d.shape)
+        # # print(d.squeeze(1).shape)
+        # # print(x.unsqueeze(1).shape)
+        # # print(x.unsqueeze(1))
         #
-        # print(d)
-        # print(type(d))
-        # print(d.shape)
-        # print(d.squeeze(1).shape)
-        # print(x.unsqueeze(1).shape)
-        # print(x.unsqueeze(1))
-
-        ######################################################################
-        # print(x.shape)
-        # if x.shape == self.input_size:
-        #     x = x.unsqueeze(0)
-        ######################################################################
-        # print(x.shape)
-        y = self.w1(x)
-        # print(y.shape)
-
-        ######################################################################
-        d = self.dilat1(y.unsqueeze(1))
-        y = d.squeeze(1)
-        ######################################################################
-
-        y = self.batch_norm1(y)
-        # print(y.shape)
-        y = self.relu(y)
-        # print(y.shape)
-        y = self.dropout(y)
-        # print(y.shape)
-
-        ###########################
-        # y3d = y
-        ############################
-
-        # linear layers
-        for i in range(self.num_stage):
-            y = self.linear_stages[i](y)
-
-        ######################################################################
-        d = self.dilat4(y.unsqueeze(1))
-        y = d.squeeze(1)
-        ######################################################################
-
-        y = self.w2(y)
-
-        ##########################
-
-        # result = [y]
+        # ######################################################################
+        # # print(x.shape)
+        # # if x.shape == self.input_size:
+        # #     x = x.unsqueeze(0)
+        # ######################################################################
+        # # print(x.shape)
+        # y = self.w1(x)
+        # # print(y.shape)
         #
-        # y = self.w3(y)
-        # y = self.batch_norm2(y)
-        # y = self.relu2(y)
-        # y = self.dropout2(y)
+        # ######################################################################
+        # d = self.dilat1(y.unsqueeze(1))
+        # y = d.squeeze(1)
+        # ######################################################################
+        #
+        # y = self.batch_norm1(y)
+        # # print(y.shape)
+        # y = self.relu(y)
+        # # print(y.shape)
+        # y = self.dropout(y)
+        # # print(y.shape)
+        #
+        # ###########################
+        # # y3d = y
+        # ############################
         #
         # # linear layers
         # for i in range(self.num_stage):
-        #     y = self.linear_stages_2[i](y)
+        #     y = self.linear_stages[i](y)
         #
-        # #y = y + y3d
+        # ######################################################################
+        # d = self.dilat4(y.unsqueeze(1))
+        # y = d.squeeze(1)
+        # ######################################################################
         #
-        # y = self.w4(y)
+        # y = self.w2(y)
         #
+        # ##########################
         #
-        # result.append(y)
+        # # result = [y]
+        # #
+        # # y = self.w3(y)
+        # # y = self.batch_norm2(y)
+        # # y = self.relu2(y)
+        # # y = self.dropout2(y)
+        # #
+        # # # linear layers
+        # # for i in range(self.num_stage):
+        # #     y = self.linear_stages_2[i](y)
+        # #
+        # # #y = y + y3d
+        # #
+        # # y = self.w4(y)
+        # #
+        # #
+        # # result.append(y)
+        #
+        # # return result
+        # return y
+        x_p1 = x[:, 0:6]
+        x_p2 = x[:, 6:12]
+        x_p3 = x[:, 12:20]
+        x_p4 = x[:, 20:26]
+        x_p5 = x[:, 26:32]
 
-        # return result
-        return y
+        y_p1 = self.p1w1(x_p1)
+        y_p2 = self.p1w1(x_p2)
+        y_p3 = self.p1w1(x_p3)
+        y_p4 = self.p1w1(x_p4)
+        y_p5 = self.p1w1(x_p5)
+
+        y_p1 = self.p1w1_batch_norm1(y_p1)
+        y_p2 = self.p2w1_batch_norm1(y_p2)
+        y_p3 = self.p3w1_batch_norm1(y_p3)
+        y_p4 = self.p4w1_batch_norm1(y_p4)
+        y_p5 = self.p5w1_batch_norm1(y_p5)
+
+        y_p1 = self.p1w1_relu(y_p1)
+        y_p2 = self.p2w1_relu(y_p2)
+        y_p3 = self.p3w1_relu(y_p3)
+        y_p4 = self.p4w1_relu(y_p4)
+        y_p5 = self.p5w1_relu(y_p5)
+
+        y_p1 = self.p1w1_dropout(y_p1)
+        y_p2 = self.p2w1_dropout(y_p2)
+        y_p3 = self.p3w1_dropout(y_p3)
+        y_p4 = self.p4w1_dropout(y_p4)
+        y_p5 = self.p5w1_dropout(y_p5)
+
+        for i in range(self.num_stage):
+            y_p1, y_p2, y_p3, y_p4, y_p5  = self.pw_linear_stages[i](y_p1, y_p2, y_p3, y_p4, y_p5)
+
+        y = torch.cat((y_p1, y_p2, y_p3, y_p4, y_p5), 1)
+
+        y = self.pw3(y)
+        y = self.pw3_batch_norm(y)
+        y = self.pw3_relu(y)
+        y = self.pw3_dropout(y)
+
+        result = self.pw4(y)
+
+        return result
+
+
+
+
+
+
+
+
+
+
+
+
+
+
