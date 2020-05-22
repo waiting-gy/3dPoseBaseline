@@ -21,25 +21,29 @@ class Linear(nn.Module):
 
         self.w1 = nn.Linear(self.l_size, self.l_size)
         ######################################################################
-        self.dilat2 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=4, dilation=2, bias=False, padding=3)
+        self.dilat2 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
         ######################################################################
         self.batch_norm1 = nn.BatchNorm1d(self.l_size)
 
         self.w2 = nn.Linear(self.l_size, self.l_size)
         ######################################################################
-        self.dilat3 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=4, dilation=2, bias=False, padding=3)
+        self.dilat3 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
         ######################################################################
         self.batch_norm2 = nn.BatchNorm1d(self.l_size)
 
     def forward(self, x):
         y = self.w1(x)
 
-
-        y = self.batch_norm1(y)
         ######################################################################
         d = self.dilat2(y.unsqueeze(1))
         y = d.squeeze(1)
         ######################################################################
+
+        y = self.batch_norm1(y)
+        # ######################################################################
+        # d = self.dilat2(y.unsqueeze(1))
+        # y = d.squeeze(1)
+        # ######################################################################
         y = self.relu(y)
         y = self.dropout(y)
 
@@ -109,10 +113,10 @@ class LinearModel(nn.Module):
         ######################################################################
         #kernel_size   : 2 3 4
         #padding       : 1 2 3
-        self.dilat1 = nn.Conv1d(in_channels=1, out_channels=1,kernel_size=4, dilation=2, bias=False, padding=3)
-        self.dilat2 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=4, dilation=2, bias=False, padding=3)
-        self.dilat3 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=4, dilation=2, bias=False, padding=3)
-        self.dilat4 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=4, dilation=2, bias=False, padding=3)
+        self.dilat1 = nn.Conv1d(in_channels=1, out_channels=1,kernel_size=3, dilation=2, bias=False, padding=2)
+        self.dilat2 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
+        self.dilat3 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
+        self.dilat4 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
 
         ######################################################################
         self.batch_norm1 = nn.BatchNorm1d(self.linear_size)
