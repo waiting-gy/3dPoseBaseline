@@ -270,7 +270,7 @@ class LinearModel(nn.Module):
         self.pw3_dropout = nn.Dropout(self.p_dropout)
 
 
-        self.pw4 = nn.Linear(self.linear_size * 5, self.output_size)
+        self.pw4 = nn.Linear(self.linear_size , self.output_size)
 
 
 
