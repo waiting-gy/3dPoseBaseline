@@ -203,16 +203,16 @@ class LinearModel(nn.Module):
         # 3d joints
         self.output_size = 16 * 3
 
-        # process input to linear size
-        self.w1 = nn.Linear(self.input_size, self.linear_size)
-
-        ######################################################################
-        #kernel_size   : 2 3 4
-        #padding       : 1 2 3
-        self.dilat1 = nn.Conv1d(in_channels=1, out_channels=1,kernel_size=3, dilation=2, bias=False, padding=2)
-        self.dilat2 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
-        self.dilat3 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
-        self.dilat4 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
+        # # process input to linear size
+        # self.w1 = nn.Linear(self.input_size, self.linear_size)
+        #
+        # ######################################################################
+        # #kernel_size   : 2 3 4
+        # #padding       : 1 2 3
+        # self.dilat1 = nn.Conv1d(in_channels=1, out_channels=1,kernel_size=3, dilation=2, bias=False, padding=2)
+        # self.dilat2 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
+        # self.dilat3 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
+        # self.dilat4 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
 
         ######################################################################
 
@@ -226,11 +226,11 @@ class LinearModel(nn.Module):
         self.p4w1 = nn.Linear(3 * 2, self.linear_size)
         self.p5w1 = nn.Linear(3 * 2, self.linear_size)
 
-        self.pw1_dilat1 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
-        self.pw2_dilat1 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
-        self.pw3_dilat1 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
-        self.pw4_dilat1 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
-        self.pw5_dilat1 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
+        # self.pw1_dilat1 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
+        # self.pw2_dilat1 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
+        # self.pw3_dilat1 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
+        # self.pw4_dilat1 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
+        # self.pw5_dilat1 = nn.Conv1d(in_channels=1, out_channels=1, kernel_size=3, dilation=2, bias=False, padding=2)
 
         self.p1w1_batch_norm1 = nn.BatchNorm1d(self.linear_size)
         self.p2w1_batch_norm1 = nn.BatchNorm1d(self.linear_size)
@@ -277,40 +277,40 @@ class LinearModel(nn.Module):
         ######################################################################
 
 
-        self.batch_norm1 = nn.BatchNorm1d(self.linear_size)
-
-        self.linear_stages = []
-        for l in range(num_stage):
-            self.linear_stages.append(Linear(self.linear_size, self.p_dropout))
-        self.linear_stages = nn.ModuleList(self.linear_stages)
-
-        # post processing
-        self.w2 = nn.Linear(self.linear_size, self.output_size)
-
-        self.relu = nn.ReLU(inplace=True)
-        self.dropout = nn.Dropout(self.p_dropout)
-
-      ######################
-        # 3d joints
-        self.input_size_2 =  16 * 3
-        # 3d joints
-        self.output_size_2 = 16 * 3
-
-        # process input to linear size
-        self.w3 = nn.Linear(self.input_size_2, self.linear_size)
-        self.batch_norm2 = nn.BatchNorm1d(self.linear_size)
-
-        self.linear_stages_2 = []
-        for l in range(num_stage):
-            self.linear_stages_2.append(Linear(self.linear_size, self.p_dropout))
-        self.linear_stages_2 = nn.ModuleList(self.linear_stages_2)
-
-        # post processing
-        self.w4 = nn.Linear(self.linear_size, self.output_size_2)
-
-        self.relu2 = nn.ReLU(inplace=True)
-        self.dropout2 = nn.Dropout(self.p_dropout)
-     ##########################
+     #    self.batch_norm1 = nn.BatchNorm1d(self.linear_size)
+     #
+     #    self.linear_stages = []
+     #    for l in range(num_stage):
+     #        self.linear_stages.append(Linear(self.linear_size, self.p_dropout))
+     #    self.linear_stages = nn.ModuleList(self.linear_stages)
+     #
+     #    # post processing
+     #    self.w2 = nn.Linear(self.linear_size, self.output_size)
+     #
+     #    self.relu = nn.ReLU(inplace=True)
+     #    self.dropout = nn.Dropout(self.p_dropout)
+     #
+     #  ######################
+     #    # 3d joints
+     #    self.input_size_2 =  16 * 3
+     #    # 3d joints
+     #    self.output_size_2 = 16 * 3
+     #
+     #    # process input to linear size
+     #    self.w3 = nn.Linear(self.input_size_2, self.linear_size)
+     #    self.batch_norm2 = nn.BatchNorm1d(self.linear_size)
+     #
+     #    self.linear_stages_2 = []
+     #    for l in range(num_stage):
+     #        self.linear_stages_2.append(Linear(self.linear_size, self.p_dropout))
+     #    self.linear_stages_2 = nn.ModuleList(self.linear_stages_2)
+     #
+     #    # post processing
+     #    self.w4 = nn.Linear(self.linear_size, self.output_size_2)
+     #
+     #    self.relu2 = nn.ReLU(inplace=True)
+     #    self.dropout2 = nn.Dropout(self.p_dropout)
+     # ##########################
 
 
 
