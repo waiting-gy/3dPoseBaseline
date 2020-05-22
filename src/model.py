@@ -397,10 +397,10 @@ class LinearModel(nn.Module):
         x_p5 = x[:, 26:32]
 
         y_p1 = self.p1w1(x_p1)
-        y_p2 = self.p1w1(x_p2)
-        y_p3 = self.p1w1(x_p3)
-        y_p4 = self.p1w1(x_p4)
-        y_p5 = self.p1w1(x_p5)
+        y_p2 = self.p2w1(x_p2)
+        y_p3 = self.p3w1(x_p3)
+        y_p4 = self.p4w1(x_p4)
+        y_p5 = self.p5w1(x_p5)
 
         y_p1 = self.p1w1_batch_norm1(y_p1)
         y_p2 = self.p2w1_batch_norm1(y_p2)
