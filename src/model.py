@@ -457,6 +457,8 @@ class LinearModel(nn.Module):
 
         y = torch.cat((y_p1, y_p2, y_p3, y_p4, y_p5), 1)
 
+        y_16 = y
+
         y = self.pw3(y)
         y = self.pw3_batch_norm(y)
         y = self.pw3_relu(y)
@@ -468,7 +470,7 @@ class LinearModel(nn.Module):
 
         result = self.pw4(y)
 
-        return result
+        return result, y_16
 
 
 
