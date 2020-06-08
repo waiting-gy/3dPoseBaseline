@@ -441,11 +441,11 @@ class LinearModel(nn.Module):
         for i in range(self.num_stage):
             y_p1, y_p2, y_p3, y_p4, y_p5  = self.pw_linear_stages[i](y_p1, y_p2, y_p3, y_p4, y_p5)
 
-        y_p1 = self.p1w2_1_dropout(y_p1)
-        y_p2 = self.p2w2_1_dropout(y_p2)
-        y_p3 = self.p3w2_1_dropout(y_p3)
-        y_p4 = self.p4w2_1_dropout(y_p4)
-        y_p5 = self.p5w2_1_dropout(y_p5)
+        y_p1 = self.p1w2_1(y_p1)
+        y_p2 = self.p2w2_1(y_p2)
+        y_p3 = self.p3w2_1(y_p3)
+        y_p4 = self.p4w2_1(y_p4)
+        y_p5 = self.p5w2_1(y_p5)
 
 
         y_p1 = y_p1 + x_p1
