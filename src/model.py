@@ -276,6 +276,7 @@ class LinearModel(nn.Module):
         self.pw3_relu = nn.ReLU(inplace=True)
         self.pw3_dropout = nn.Dropout(self.p_dropout)
 
+        self.linear_stages = []
         for k in range(num_stage):
             self.linear_stages.append(Linear(self.linear_size, self.p_dropout))
         self.linear_stages = nn.ModuleList(self.linear_stages)
