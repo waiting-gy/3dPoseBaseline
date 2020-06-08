@@ -263,11 +263,28 @@ class LinearModel(nn.Module):
         self.p4w2 = nn.Linear(self.linear_size, self.linear_size)
         self.p5w2 = nn.Linear(self.linear_size, self.linear_size)
 
+        self.p1w2_1 = nn.Linear(self.linear_size, 6)
+        self.p2w2_1 = nn.Linear(self.linear_size, 6)
+        self.p3w2_1 = nn.Linear(self.linear_size, 8)
+        self.p4w2_1 = nn.Linear(self.linear_size, 6)
+        self.p5w2_1 = nn.Linear(self.linear_size, 6)
 
-        self.pw3 = nn.Linear(self.linear_size*5, self.linear_size)
+
+        # self.pw3 = nn.Linear(self.linear_size*5, self.linear_size)
+        self.pw3 = nn.Linear(self.input_size, self.linear_size)
         self.pw3_batch_norm = nn.BatchNorm1d(self.linear_size)
         self.pw3_relu = nn.ReLU(inplace=True)
         self.pw3_dropout = nn.Dropout(self.p_dropout)
+
+        for k in range(num_stage):
+            self.linear_stages.append(Linear(self.linear_size, self.p_dropout))
+        self.linear_stages = nn.ModuleList(self.linear_stages)
+
+        # post processing
+        self.w3_1 = nn.Linear(self.linear_size, self.output_size)
+
+        self.relu3_1 = nn.ReLU(inplace=True)
+        self.dropout3_1 = nn.Dropout(self.p_dropout)
 
 
         self.pw4 = nn.Linear(self.linear_size , self.output_size)
@@ -423,12 +440,30 @@ class LinearModel(nn.Module):
         for i in range(self.num_stage):
             y_p1, y_p2, y_p3, y_p4, y_p5  = self.pw_linear_stages[i](y_p1, y_p2, y_p3, y_p4, y_p5)
 
+        y_p1 = self.p1w2_1_dropout(y_p1)
+        y_p2 = self.p2w2_1_dropout(y_p2)
+        y_p3 = self.p3w2_1_dropout(y_p3)
+        y_p4 = self.p4w2_1_dropout(y_p4)
+        y_p5 = self.p5w2_1_dropout(y_p5)
+
+
+        y_p1 = y_p1 + x_p1
+        y_p2 = y_p2 + x_p2
+        y_p3 = y_p3 + x_p3
+        y_p4 = y_p4 + x_p4
+        y_p5 = y_p5 + x_p5
+
+
         y = torch.cat((y_p1, y_p2, y_p3, y_p4, y_p5), 1)
 
         y = self.pw3(y)
         y = self.pw3_batch_norm(y)
         y = self.pw3_relu(y)
         y = self.pw3_dropout(y)
+
+        # linear layers
+        for i in range(self.num_stage):
+            y = self.linear_stages[i](y)
 
         result = self.pw4(y)
 
