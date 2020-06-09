@@ -193,6 +193,13 @@ def main(opt):
 
     logger.close()
 
+# def adjust_learning_rate(optimizer,rate=0.3):
+#     for param_group in optimizer.param_groups:
+#         if param_group['lr'] <= 1e-30:
+#             param_group['lr'] = 1e-2
+#         param_group['lr']=param_group['lr']* rate
+#         print("adjust_lr",param_group['lr'])
+
 
 def train(train_loader, model, criterion, optimizer,
           lr_init=None, lr_now=None, glob_step=None, lr_decay=None, gamma=None,
