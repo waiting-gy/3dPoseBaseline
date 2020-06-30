@@ -223,8 +223,8 @@ def train(train_loader, model, criterion, optimizer,
         inputs = Variable(inps.cuda())
         targets = Variable(tars.cuda(async=True))
 
-        # outputs, outputs_inputs = model(inputs)
-        outputs = model(inputs)
+        outputs, outputs_inputs = model(inputs)
+        # outputs = model(inputs)
 
         # calculate loss
         optimizer.zero_grad()
@@ -237,8 +237,8 @@ def train(train_loader, model, criterion, optimizer,
         # ########
 
         loss = criterion(outputs, targets)
-        # loss_input  = criterion(outputs_inputs, inputs)
-        # loss = loss + loss_input
+        loss_input  = criterion(outputs_inputs, inputs)
+        loss = loss + loss_input
 
         losses.update(loss.item(), inputs.size(0))
         loss.backward()
@@ -293,8 +293,8 @@ def test(test_loader, model, criterion, stat_3d, procrustes=False):
         inputs = Variable(inps.cuda())
         targets = Variable(tars.cuda(async=True))
 
-        # outputs, outputs_inputs = model(inputs)
-        outputs = model(inputs)
+        outputs, outputs_inputs = model(inputs)
+        # outputs = model(inputs)
 
 #        print('input:',((inputs)))#16*2
 #        print('input:',((inputs[0])))#16*2
@@ -312,8 +312,8 @@ def test(test_loader, model, criterion, stat_3d, procrustes=False):
         outputs_coord = outputs
 
         loss = criterion(outputs, targets)
-        # loss_input = criterion(outputs_inputs, inputs)
-        # loss = loss + loss_input
+        loss_input = criterion(outputs_inputs, inputs)
+        loss = loss + loss_input
 
         losses.update(loss.item(), inputs.size(0))
 

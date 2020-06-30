@@ -314,6 +314,9 @@ class LinearModel(nn.Module):
         self.relu = nn.ReLU(inplace=True)
         self.dropout = nn.Dropout(self.p_dropout)
 
+        # 2d pose processing for 2d loss
+        self.w3 = nn.Linear(self.linear_size, self.input_size)
+
      #  ######################
      #    # 3d joints
      #    self.input_size_2 =  16 * 3
@@ -396,7 +399,15 @@ class LinearModel(nn.Module):
         y = d.squeeze(1)
         ######################################################################
 
+        ######################################################################
+        # 2d pose processing for 2d loss
+        y_2d_16 = self.w2(y)
+        ######################################################################
+
+
         y = self.w2(y)
+
+
 
         ##########################
 
@@ -419,7 +430,7 @@ class LinearModel(nn.Module):
         # result.append(y)
 
         # return result
-        return y
+        return y, y_2d_16
 ##############5pose###########
         # x_p1 = x[:, 0:6]
         # x_p2 = x[:, 6:12]
