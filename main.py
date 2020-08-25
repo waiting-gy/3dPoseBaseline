@@ -110,14 +110,14 @@ def main(opt):
                 num_workers=opt.job,
                 pin_memory=True)
 #
-            with open('/home/ubuntu/gaoyu/Projects/3d_pose_baseline_pytorch/data/json/000000000002_keypoints.json','r',encoding='utf8') as fp0:
-                json_data0 = json.load(fp0)
-
-            _data0 = np.array(json_data0['people'][0]['pose_keypoints_2d'])
-            data_mean0 = np.mean(_data0, axis=0)
-            data_std0  = np.std(_data0, axis=0)
-
-            _data0 = torch.from_numpy(np.divide((_data0 - data_mean0), data_std0)).float()
+            # with open('/home/ubuntu/gaoyu/Projects/3d_pose_baseline_pytorch/data/json/000000000002_keypoints.json','r',encoding='utf8') as fp0:
+            #     json_data0 = json.load(fp0)
+            #
+            # _data0 = np.array(json_data0['people'][0]['pose_keypoints_2d'])
+            # data_mean0 = np.mean(_data0, axis=0)
+            # data_std0  = np.std(_data0, axis=0)
+            # 
+            # _data0 = torch.from_numpy(np.divide((_data0 - data_mean0), data_std0)).float()
 
 #            print(json_data0['people'][0]['pose_keypoints_2d'])
 #            _data = torch.Tensor([json_data0['people'][0]['pose_keypoints_2d']])
