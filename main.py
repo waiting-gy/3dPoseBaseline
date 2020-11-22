@@ -116,7 +116,7 @@ def main(opt):
             # _data0 = np.array(json_data0['people'][0]['pose_keypoints_2d'])
             # data_mean0 = np.mean(_data0, axis=0)
             # data_std0  = np.std(_data0, axis=0)
-            # 
+            #
             # _data0 = torch.from_numpy(np.divide((_data0 - data_mean0), data_std0)).float()
 
 #            print(json_data0['people'][0]['pose_keypoints_2d'])
@@ -237,6 +237,7 @@ def train(train_loader, model, criterion, optimizer,
         # ########
 
         loss = criterion(outputs, targets)
+        a =1
         loss_input  = criterion(outputs_inputs, inputs)
         loss = loss + loss_input
 
