@@ -237,7 +237,6 @@ def train(train_loader, model, criterion, optimizer,
         # ########
 
         loss = criterion(outputs, targets)
-        a =1
         loss_input  = criterion(outputs_inputs, inputs)
         loss = loss + loss_input
 
